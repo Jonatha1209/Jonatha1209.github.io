@@ -10,21 +10,31 @@
             padding: 20px;
         }
         .container {
-            max-width: 400px;
+            max-width: 600px;
             margin: 0 auto;
             text-align: center;
         }
         #result {
             margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            background-color: #f4f4f4;
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
         }
         .table {
-            margin: 5px 0;
-            padding: 8px;
+            width: 70px;
+            height: 70px;
+            margin: 5px;
+            text-align: center;
+            line-height: 70px;
             border: 1px solid #ddd;
             background-color: #e2e2e2;
+            font-size: 18px;
+            border-radius: 8px;
+        }
+        .empty {
+            background-color: #f4f4f4;
         }
     </style>
 </head>
@@ -42,7 +52,7 @@
 <script>
     function generateSeating() {
         const peopleCount = document.getElementById('peopleCount').value;
-        
+
         if (peopleCount < 1 || isNaN(peopleCount)) {
             alert('사람 수는 1 이상이어야 합니다.');
             return;
@@ -54,12 +64,30 @@
 
         let resultDiv = document.getElementById('result');
         resultDiv.innerHTML = '<h3>자리 배치 결과:</h3>';
-        numbers.forEach(num => {
-            const table = document.createElement('div');
-            table.className = 'table';
-            table.textContent = `자리 ${num}`;
-            resultDiv.appendChild(table);
-        });
+
+        let rows = Math.ceil(peopleCount / 4); 
+        let index = 0;
+
+        for (let i = 0; i < rows; i++) {
+            const rowDiv = document.createElement('div');
+            rowDiv.classList.add('row');
+
+            for (let j = 0; j < 4; j++) {
+                const table = document.createElement('div');
+                table.classList.add('table');
+
+                if (index < peopleCount) {
+                    table.textContent = `자리 ${numbers[index]}`;
+                    index++;
+                } else {
+                    table.classList.add('empty');
+                }
+
+                rowDiv.appendChild(table);
+            }
+
+            resultDiv.appendChild(rowDiv);
+        }
     }
 
     function shuffle(array) {
