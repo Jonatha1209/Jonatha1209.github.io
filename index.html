@@ -29,45 +29,22 @@
 <body>
 
 <div class="container">
-    <h2>HTML 파일 선택</h2>
-    <label for="fileSelect">파일을 선택하세요:</label>
+    <h2>HTML 페이지 선택</h2>
+    <label for="fileSelect">페이지를 선택하세요:</label>
     <select id="fileSelect">
-        <option value="">파일 선택</option>
+        <option value="">페이지 선택</option>
+        <option value="./folders/자리뽑기.html">자리</option>
     </select>
     <br>
-    <button onclick="navigateToFile()">선택한 파일 열기</button>
+    <button onclick="navigateToFile()">선택한 페이지 열기</button>
 </div>
 
 <script>
-    const repoOwner = 'Jonatha1209';
-    const repoName = 'Jonatha1209.github.io'; 
-    const folderPath = 'folders'; 
-
-    const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
-
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(files => {
-            const selectElement = document.getElementById('fileSelect');
-            files.forEach(file => {
-                if (file.name.endsWith('.html')) {
-                    const option = document.createElement('option');
-                    option.value = file.download_url;
-                    option.textContent = file.name; 
-                    selectElement.appendChild(option);
-                }
-            });
-        })
-        .catch(error => {
-            alert('페이지 목록을 불러오는 중 오류가 발생했습니다.');
-            console.error('Error fetching file list:', error);
-        });
-
     function navigateToFile() {
         const selectedFile = document.getElementById('fileSelect').value;
         
         if (selectedFile) {
-            window.location.href = selectedFile;
+            window.location.href = selectedFile; 
         } else {
             alert('페이지를 선택하세요!');
         }
