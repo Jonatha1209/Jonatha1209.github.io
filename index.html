@@ -1,4 +1,78 @@
----
-layout: home
-# Index page
----
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 파일 선택</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>HTML 파일 선택</h2>
+    <label for="fileSelect">파일을 선택하세요:</label>
+    <select id="fileSelect">
+        <option value="">파일 선택</option>
+    </select>
+    <br>
+    <button onclick="navigateToFile()">선택한 파일 열기</button>
+</div>
+
+<script>
+    const repoOwner = 'Jonatha1209';
+    const repoName = 'Jonatha1209.github.io'; 
+    const folderPath = 'folders'; 
+
+    const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(files => {
+            const selectElement = document.getElementById('fileSelect');
+            files.forEach(file => {
+                if (file.name.endsWith('.html')) {
+                    const option = document.createElement('option');
+                    option.value = file.download_url;
+                    option.textContent = file.name; 
+                    selectElement.appendChild(option);
+                }
+            });
+        })
+        .catch(error => {
+            alert('페이지 목록을 불러오는 중 오류가 발생했습니다.');
+            console.error('Error fetching file list:', error);
+        });
+
+    function navigateToFile() {
+        const selectedFile = document.getElementById('fileSelect').value;
+        
+        if (selectedFile) {
+            window.location.href = selectedFile;
+        } else {
+            alert('페이지를 선택하세요!');
+        }
+    }
+</script>
+
+</body>
+</html>

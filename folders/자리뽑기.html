@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>랜덤 자리 배치</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f4f4f4;
+        }
+        .table {
+            margin: 5px 0;
+            padding: 8px;
+            border: 1px solid #ddd;
+            background-color: #e2e2e2;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>자리 배치 프로그램</h2>
+    <label for="peopleCount">사람 수 입력:</label>
+    <input type="number" id="peopleCount" min="1" placeholder="사람 수 입력">
+    <button onclick="generateSeating()">자리 배치하기</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function generateSeating() {
+        const peopleCount = document.getElementById('peopleCount').value;
+        
+        if (peopleCount < 1 || isNaN(peopleCount)) {
+            alert('사람 수는 1 이상이어야 합니다.');
+            return;
+        }
+
+        let numbers = Array.from({ length: peopleCount }, (_, i) => i + 1);
+
+        numbers = shuffle(numbers);
+
+        let resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = '<h3>자리 배치 결과:</h3>';
+        numbers.forEach(num => {
+            const table = document.createElement('div');
+            table.className = 'table';
+            table.textContent = `자리 ${num}`;
+            resultDiv.appendChild(table);
+        });
+    }
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]]; 
+        }
+        return array;
+    }
+</script>
+
+</body>
+</html>
