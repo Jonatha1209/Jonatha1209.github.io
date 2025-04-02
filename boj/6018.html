@@ -16,54 +16,6 @@
 
     <h2>코드 :</h2>
 
-    <pre><code class="cpp">
-#include <bits/stdc++.h>
-
-using namespace std;
-
-int parent[1010101];
-int m, n;
-
-int Find(int x){
-  if (parent[x] == x) return x;
-  return parent[x] = Find(parent[x]);
-}
-
-void Union(int x, int y){
-  x = Find(x);
-  y = Find(y);
-  parent[x] = y;
-}
-
-bool yes(int x, int y){
-  return Find(x) == Find(y);
-}
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    
-    for (int i = 1; i <= 1010101; i++) {
-        parent[i] = i;
-    }
-    int k;
-    cin >> n >> m >> k;
-    for (int i = 0; i < m; i++) {
-        int a, b;
-        cin >> a >> b;
-        Union(a, b);
-    }
-    for (int i = 0; i < k; i++) {
-        int a, b;
-        cin >> a >> b;
-        if (yes(a, b)) {
-            cout << "Y\n";
-        } else {
-            cout << "N\n";
-        }
-    }
-    return 0;
-}
-    </code></pre>
+    <p><a href="https://jonatha1209.github.io/boj/6018.cpp" target="_blank">C++ 코드 보기</a></p>
 </body>
 </html>
